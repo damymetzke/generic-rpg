@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://resources/tilesets/test.tres" type="TileSet" id=1]
 [ext_resource path="res://Actors/Player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/DynamicLayerCollisionPolygon.cs" type="Script" id=3]
 
 [node name="Sandbox" type="Node2D"]
 
@@ -44,6 +45,7 @@ polygon = PoolVector2Array( 256, 96, 256, 320, 288, 320, 288, 352, 416, 352, 416
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collision/Top/Ground"]
 polygon = PoolVector2Array( 288, 256, 408, 256, 408, 192, 416, 192, 416, 352, 512, 352, 512, 192, 520, 192, 520, 256, 640, 256, 640, 224, 672, 224, 672, 160, 640, 160, 640, 128, 576, 128, 576, 96, 544, 96, 544, 64, 320, 64, 320, 96, 256, 96, 256, 224, 288, 224, 288, 256, 200, 256, 200, 32, 728, 32, 728, 400, 200, 400, 200, 256 )
+script = ExtResource( 3 )
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
 position = Vector2( 497.244, 451.079 )

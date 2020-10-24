@@ -1,11 +1,10 @@
 using Godot;
 using System;
 
-public class Player : Node2D
+public class Player : RigidBody2D
 {
 	[Export]
-	private float movementSpeed = 100.0f;
-
+	private float movementSpeed = 20.0f;
 	public override void _Process(float delta)
 	{
 		Vector2 direction = new Vector2(0.0f, 0.0f);
@@ -27,6 +26,8 @@ public class Player : Node2D
 			direction += new Vector2(0.0f, 1.0f);
 		}
 
-		this.SetPosition(this.GetPosition() + (delta * direction * this.movementSpeed));
+
+		this.LinearVelocity = delta * direction * 1000.0f * this.movementSpeed;
+		this.Rotation = 0.0f;
 	}
 }

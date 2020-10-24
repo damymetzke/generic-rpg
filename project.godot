@@ -42,6 +42,15 @@ player_down={
  ]
 }
 
+[layer_names]
+
+2d_physics/layer_1="LevelGeometry"
+2d_physics/layer_2="Player"
+
+[physics]
+
+2d/default_gravity=0
+
 [rendering]
 
 environment/default_environment="res://default_env.tres"

@@ -11,9 +11,7 @@ public class DynamicLayerCollisionPolygon : CollisionPolygon2D
     public override void _Ready()
     {
         DynamicLayerSingleton dynamicLayer = (DynamicLayerSingleton)GetNode("/root/DynamicLayerSingleton");
-        // dynamicLayer.Connect(nameof(DynamicLayerSingleton.OnSwitchLayer), this, nameof(OnSwitchLayer));
-
-        GD.Print(this.HasMethod(nameof(OnSwitchLayer)));
+        dynamicLayer.BindOnSwitchLayer(this.OnSwitchLayer);
 
         dynamicLayer.SwitchLayer(5);
     }

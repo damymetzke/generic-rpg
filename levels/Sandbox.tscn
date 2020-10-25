@@ -37,6 +37,7 @@ polygon = PoolVector2Array( 32, 256, 64, 256, 64, 192, 128, 192, 128, 160, 160, 
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collision/Bottom/Platform"]
 polygon = PoolVector2Array( 256, 96, 256, 320, 288, 320, 288, 352, 416, 352, 416, 192, 512, 192, 512, 352, 640, 352, 640, 320, 672, 320, 672, 160, 640, 160, 640, 128, 576, 128, 576, 96, 544, 96, 544, 64, 320, 64, 320, 96 )
+script = ExtResource( 3 )
 
 [node name="Top" type="Node2D" parent="Collision"]
 
@@ -45,6 +46,7 @@ polygon = PoolVector2Array( 256, 96, 256, 320, 288, 320, 288, 352, 416, 352, 416
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collision/Top/Ground"]
 polygon = PoolVector2Array( 288, 256, 408, 256, 408, 192, 416, 192, 416, 352, 512, 352, 512, 192, 520, 192, 520, 256, 640, 256, 640, 224, 672, 224, 672, 160, 640, 160, 640, 128, 576, 128, 576, 96, 544, 96, 544, 64, 320, 64, 320, 96, 256, 96, 256, 224, 288, 224, 288, 256, 200, 256, 200, 32, 728, 32, 728, 400, 200, 400, 200, 256 )
 script = ExtResource( 3 )
+activateOn = 1
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
 position = Vector2( 497.244, 451.079 )

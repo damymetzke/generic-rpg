@@ -4,7 +4,7 @@
 [ext_resource path="res://src/Player.cs" type="Script" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 15.9619, 31.9724 )
+extents = Vector2( 15.9619, 16.0641 )
 
 [node name="RigidBody2D" type="RigidBody2D"]
 collision_layer = 2
@@ -16,4 +16,5 @@ frames = ExtResource( 1 )
 animation = "idle"
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
+position = Vector2( 0, 15.9806 )
 shape = SubResource( 1 )

@@ -5,19 +5,6 @@ public class Player : KinematicBody2D
 {
     private AnimatedSprite animatedSprite;
 
-    private enum HorizontalDirection
-    {
-        LEFT,
-        NONE,
-        RIGHT
-    }
-    private enum VerticalDirection
-    {
-        UP,
-        NONE,
-        DOWN
-    }
-
     [Export]
     private float acceleration = 4000.0f;
 
@@ -36,42 +23,6 @@ public class Player : KinematicBody2D
 
     public override void _PhysicsProcess(float delta)
     {
-
-        bool walkingLeft = Input.IsActionPressed("player_left");
-        bool walkingRight = Input.IsActionPressed("player_right");
-
-        bool walkingUp = Input.IsActionPressed("player_up");
-        bool walkingDown = Input.IsActionPressed("player_down");
-
-        HorizontalDirection horizontalDirection = (walkingLeft == walkingRight)
-            ? HorizontalDirection.NONE
-            : (walkingLeft) ? HorizontalDirection.LEFT : HorizontalDirection.RIGHT;
-
-        VerticalDirection verticalDirection = (walkingUp == walkingDown)
-            ? VerticalDirection.NONE
-            : (walkingUp) ? VerticalDirection.UP : VerticalDirection.DOWN;
-
-        if (horizontalDirection == HorizontalDirection.RIGHT)
-        {
-            animatedSprite.Play("walk-right");
-        }
-        else if (horizontalDirection == HorizontalDirection.LEFT)
-        {
-            animatedSprite.Play("walk-left");
-        }
-        else if (verticalDirection == VerticalDirection.DOWN)
-        {
-            animatedSprite.Play("walk-down");
-        }
-        else if (verticalDirection == VerticalDirection.UP)
-        {
-            animatedSprite.Play("walk-up");
-        }
-        else
-        {
-            animatedSprite.Play("idle");
-        }
-
         Vector2 direction = new Vector2(
             Input.GetActionStrength("player_right") - Input.GetActionStrength("player_left"),
             Input.GetActionStrength("player_down") - Input.GetActionStrength("player_up")
@@ -82,12 +33,33 @@ public class Player : KinematicBody2D
             direction = direction.Normalized();
         }
 
+        float movementAngle = direction.Angle() / Mathf.Pi;
+
+        if (direction.Length() == 0.0f)
+        {
+            animatedSprite.Play("idle");
+
+        }
+        else if (Mathf.Abs(movementAngle) < 0.25f)
+        {
+            animatedSprite.Play("walk-right");
+        }
+        else if (Mathf.Abs(movementAngle) > 0.75f)
+        {
+            animatedSprite.Play("walk-left");
+        }
+        else if (movementAngle > 0.0f)
+        {
+            animatedSprite.Play("walk-down");
+        }
+        else
+        {
+            animatedSprite.Play("walk-up");
+        }
+
         float frameAcceleration = acceleration * delta;
 
-        if (
-            horizontalDirection == HorizontalDirection.NONE
-            && verticalDirection == VerticalDirection.NONE
-        )
+        if (direction.Length() == 0.0f)
         {
             if (motion.Length() > frameAcceleration)
             {

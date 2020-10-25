@@ -6,9 +6,10 @@
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 15.9619, 16.0641 )
 
-[node name="RigidBody2D" type="RigidBody2D"]
+[node name="Player" type="KinematicBody2D"]
 collision_layer = 2
 script = ExtResource( 2 )
+movementSpeed = 1.0
 
 [node name="CharacterSprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 4, 4 )

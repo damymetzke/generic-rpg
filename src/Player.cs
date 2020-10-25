@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public class Player : RigidBody2D
+public class Player : KinematicBody2D
 {
 	private AnimatedSprite animatedSprite;
 
@@ -21,6 +21,8 @@ public class Player : RigidBody2D
 	[Export]
 	private float movementSpeed = 20.0f;
 
+	private Vector2 motion;
+
 	public override void _Ready()
 	{
 		base._Ready();
@@ -28,7 +30,7 @@ public class Player : RigidBody2D
 		animatedSprite.Play("idle");
 	}
 
-	public override void _Process(float delta)
+	public override void _PhysicsProcess(float delta)
 	{
 
 		bool walkingLeft = Input.IsActionPressed("player_left");
@@ -94,8 +96,31 @@ public class Player : RigidBody2D
 			animatedSprite.Play("idle");
 		}
 
+		float frameAcceleration = movementSpeed * 100.0f * delta;
 
-		this.LinearVelocity = delta * direction * 1000.0f * this.movementSpeed;
-		this.Rotation = 0.0f;
+		if (
+			horizontalDirection == HorizontalDirection.NONE
+			&& verticalDirection == VerticalDirection.NONE
+		)
+		{
+			if (motion.Length() > frameAcceleration)
+			{
+				motion -= motion.Normalized() * frameAcceleration;
+			}
+			else
+			{
+				motion = new Vector2();
+			}
+		}
+		else
+		{
+			motion += frameAcceleration * direction.Normalized();
+			motion = motion.Clamped(movementSpeed * 10.0f);
+		}
+
+		motion = MoveAndSlide(motion);
+
+		// this.LinearVelocity = delta * direction * 1000.0f * this.movementSpeed;
+		// this.Rotation = 0.0f;
 	}
 }

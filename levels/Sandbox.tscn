@@ -75,5 +75,4 @@ shape = SubResource( 1 )
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
 position = Vector2( 497.244, 451.079 )
-linear_damp = 0.0
 movementSpeed = 30.0

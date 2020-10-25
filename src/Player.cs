@@ -19,7 +19,11 @@ public class Player : KinematicBody2D
     }
 
     [Export]
-    private float movementSpeed = 20.0f;
+    private float acceleration = 4000.0f;
+
+    [Export]
+    private float maxSpeed = 350.0f;
+
 
     private Vector2 motion;
 
@@ -78,7 +82,7 @@ public class Player : KinematicBody2D
             direction = direction.Normalized();
         }
 
-        float frameAcceleration = movementSpeed * 100.0f * delta;
+        float frameAcceleration = acceleration * delta;
 
         if (
             horizontalDirection == HorizontalDirection.NONE
@@ -97,7 +101,7 @@ public class Player : KinematicBody2D
         else
         {
             motion += frameAcceleration * direction.Normalized();
-            motion = motion.Clamped(movementSpeed * 10.0f);
+            motion = motion.Clamped(maxSpeed);
         }
 
         motion = MoveAndSlide(motion);

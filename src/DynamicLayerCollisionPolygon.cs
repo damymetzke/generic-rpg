@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public class DynamicLayerCollisionPolygon : CollisionPolygon2D
+public class DynamicLayerCollisionPolygon : StaticBody2D
 {
 
 	[Export]
@@ -9,13 +9,14 @@ public class DynamicLayerCollisionPolygon : CollisionPolygon2D
 
 	public void OnSwitchLayer(byte newLayer)
 	{
+		GD.Print(newLayer);
 		if (newLayer == activateOn)
 		{
-			this.Disabled = false;
+			SetCollisionLayerBit(0, true);
 		}
 		else
 		{
-			this.Disabled = true;
+			SetCollisionLayerBit(0, false);
 		}
 	}
 	public override void _Ready()
@@ -25,11 +26,11 @@ public class DynamicLayerCollisionPolygon : CollisionPolygon2D
 
 		if (dynamicLayer.GetCurrentLayer() == activateOn)
 		{
-			this.Disabled = false;
+			SetCollisionLayerBit(0, true);
 		}
 		else
 		{
-			this.Disabled = true;
+			SetCollisionLayerBit(0, false);
 		}
 	}
 }

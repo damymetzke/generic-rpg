@@ -11,7 +11,6 @@ public class Player : KinematicBody2D
     [Export]
     private float maxSpeed = 350.0f;
 
-
     private Vector2 motion;
 
     public override void _Ready()
@@ -23,16 +22,22 @@ public class Player : KinematicBody2D
 
     public override void _PhysicsProcess(float delta)
     {
-        Vector2 direction = new Vector2(
-            Input.GetActionStrength("player_right") - Input.GetActionStrength("player_left"),
-            Input.GetActionStrength("player_down") - Input.GetActionStrength("player_up")
-        );
+        Vector2 direction = CalculateInputDirection();
+        CalculateAnimation(direction);
 
-        if (direction.Length() >= 1.0f)
-        {
-            direction = direction.Normalized();
-        }
+        CalculateMovement(direction, delta);
+    }
 
+    private Vector2 CalculateInputDirection()
+    {
+        return new Vector2(
+                    Input.GetActionStrength("player_right") - Input.GetActionStrength("player_left"),
+                    Input.GetActionStrength("player_down") - Input.GetActionStrength("player_up")
+                ).Clamped(1.0f);
+    }
+
+    private void CalculateAnimation(Vector2 direction)
+    {
         float movementAngle = direction.Angle() / Mathf.Pi;
 
         if (direction.Length() == 0.0f)
@@ -57,6 +62,10 @@ public class Player : KinematicBody2D
             animatedSprite.Play("walk-up");
         }
 
+    }
+
+    private void CalculateMovement(Vector2 direction, float delta)
+    {
         float frameAcceleration = acceleration * delta;
 
         if (direction.Length() == 0.0f)

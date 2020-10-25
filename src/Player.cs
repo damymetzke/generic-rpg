@@ -73,12 +73,21 @@ public class Player : RigidBody2D
 				break;
 		}
 
-		if (
-			horizontalDirection != HorizontalDirection.NONE
-			|| verticalDirection != VerticalDirection.NONE
-		)
+		if (horizontalDirection == HorizontalDirection.RIGHT)
+		{
+			animatedSprite.Play("walk-right");
+		}
+		else if (horizontalDirection == HorizontalDirection.LEFT)
+		{
+			animatedSprite.Play("walk-left");
+		}
+		else if (verticalDirection == VerticalDirection.DOWN)
 		{
 			animatedSprite.Play("walk-down");
+		}
+		else if (verticalDirection == VerticalDirection.UP)
+		{
+			animatedSprite.Play("walk-up");
 		}
 		else
 		{

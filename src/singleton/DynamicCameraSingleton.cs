@@ -3,7 +3,7 @@ using System;
 
 public class DynamicCameraSingleton : Node
 {
-    private float followRange = 130.0f;
+    private float followRange = 100.0f;
 
     private Vector2 targetPosition;
 

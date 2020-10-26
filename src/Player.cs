@@ -3,6 +3,7 @@ using System;
 
 public class Player : KinematicBody2D
 {
+	DynamicCameraSingleton dynamicCameraSingleton;
 	private AnimatedSprite animatedSprite;
 
 	[Export]
@@ -18,6 +19,9 @@ public class Player : KinematicBody2D
 		base._Ready();
 		animatedSprite = GetNode<AnimatedSprite>("CharacterSprite");
 		animatedSprite.Play("idle");
+
+		dynamicCameraSingleton = (DynamicCameraSingleton)GetNode("/root/DynamicCameraSingleton");
+
 	}
 
 	public override void _PhysicsProcess(float delta)
@@ -26,6 +30,8 @@ public class Player : KinematicBody2D
 		CalculateAnimation(direction);
 
 		CalculateMovement(direction, delta);
+		dynamicCameraSingleton.UpdateTarget(Position);
+
 	}
 
 	private Vector2 CalculateInputDirection()

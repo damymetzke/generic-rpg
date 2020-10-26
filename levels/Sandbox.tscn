@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://resources/tilesets/test.tres" type="TileSet" id=1]
 [ext_resource path="res://Actors/Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://src/DynamicLayerCollisionPolygon.cs" type="Script" id=3]
 [ext_resource path="res://src/LayerSwitchTrigger.cs" type="Script" id=4]
+[ext_resource path="res://Actors/DynamicCamera.tscn" type="PackedScene" id=5]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 48, 24 )
@@ -75,3 +76,10 @@ shape = SubResource( 1 )
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
 position = Vector2( 497.244, 451.079 )
+
+[node name="DynamicCamera" parent="." instance=ExtResource( 5 )]
+position = Vector2( 512, 296 )
+current = true
+process_mode = 0
+smoothing_enabled = true
+smoothing_speed = 15.0

@@ -8,9 +8,11 @@ public class Player : KinematicBody2D
 
 	[Export]
 	private float acceleration = 4000.0f;
-
 	[Export]
 	private float maxSpeed = 350.0f;
+
+	[Export]
+	private bool updateCameraPosition = true;
 
 	private Vector2 motion;
 
@@ -30,8 +32,11 @@ public class Player : KinematicBody2D
 		CalculateAnimation(direction);
 
 		CalculateMovement(direction, delta);
-		dynamicCameraSingleton.UpdateTarget(Position);
 
+		if (updateCameraPosition)
+		{
+			dynamicCameraSingleton.UpdateTarget(Position);
+		}
 	}
 
 	private Vector2 CalculateInputDirection()

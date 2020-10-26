@@ -9,6 +9,8 @@ public class DynamicCamera : Camera2D
 	{
 		base._Ready();
 		dynamicCameraSingleton = (DynamicCameraSingleton)GetNode("/root/DynamicCameraSingleton");
+
+		dynamicCameraSingleton.SetHalfScreenSize(GetViewportRect().Size * 0.5f);
 	}
 
 	public override void _Process(float delta)

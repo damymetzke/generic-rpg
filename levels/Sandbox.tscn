@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://resources/tilesets/test.tres" type="TileSet" id=1]
 [ext_resource path="res://Actors/Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://src/DynamicLayerCollisionPolygon.cs" type="Script" id=3]
 [ext_resource path="res://src/LayerSwitchTrigger.cs" type="Script" id=4]
 [ext_resource path="res://Actors/DynamicCamera.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Actors/CameraArea.tscn" type="PackedScene" id=6]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 48, 24 )
@@ -28,6 +29,7 @@ format = 1
 tile_data = PoolIntArray( 131082, 1, 0, 131083, 1, 1, 131084, 1, 1, 131085, 1, 1, 131086, 1, 1, 131087, 1, 1, 131088, 1, 2, 196616, 1, 0, 196617, 1, 1, 196618, 1, 131077, 196619, 1, 65537, 196620, 1, 65537, 196621, 1, 65537, 196622, 1, 65537, 196623, 1, 65537, 196624, 1, 131076, 196625, 1, 2, 262152, 1, 65536, 262153, 1, 65537, 262154, 1, 65537, 262155, 1, 65537, 262156, 1, 65537, 262157, 1, 65537, 262158, 1, 65537, 262159, 1, 65537, 262160, 1, 65537, 262161, 1, 131076, 262162, 1, 1, 262163, 1, 2, 327688, 1, 65536, 327689, 1, 65537, 327690, 1, 65537, 327691, 1, 65537, 327692, 1, 65540, 327693, 1, 131073, 327694, 1, 131073, 327695, 1, 131073, 327696, 1, 65541, 327697, 1, 65537, 327698, 1, 65537, 327699, 1, 131076, 327700, 1, 2, 393224, 1, 131072, 393225, 1, 65541, 393226, 1, 65537, 393227, 1, 65537, 393228, 1, 65538, 393229, 6, 0, 393230, 7, 0, 393231, 8, 0, 393232, 1, 65536, 393233, 1, 65537, 393234, 1, 65537, 393235, 1, 65540, 393236, 1, 131074, 458760, 2, 0, 458761, 1, 131072, 458762, 1, 131073, 458763, 1, 131073, 458764, 1, 131074, 458765, 6, 0, 458766, 7, 0, 458767, 8, 0, 458768, 1, 131072, 458769, 1, 131073, 458770, 1, 131073, 458771, 1, 131074, 458772, 4, 0, 524296, 2, 0, 524297, 2, 0, 524298, 3, 0, 524299, 3, 0, 524300, 3, 0, 524301, 6, 0, 524302, 7, 0, 524303, 8, 0, 524304, 3, 0, 524305, 3, 0, 524306, 3, 0, 524307, 4, 0, 524308, 4, 0, 589832, 2, 0, 589833, 2, 0, 589834, 3, 0, 589835, 3, 0, 589836, 3, 0, 589837, 6, 0, 589838, 7, 0, 589839, 8, 0, 589840, 3, 0, 589841, 3, 0, 589842, 3, 0, 589843, 4, 0, 589844, 4, 0, 655369, 2, 0, 655370, 3, 0, 655371, 3, 0, 655372, 3, 0, 655373, 6, 0, 655374, 7, 0, 655375, 8, 0, 655376, 3, 0, 655377, 3, 0, 655378, 3, 0, 655379, 4, 0 )
 
 [node name="Collision" type="Node2D" parent="."]
+visible = false
 
 [node name="Global" type="Node2D" parent="Collision"]
 
@@ -75,6 +77,11 @@ script = ExtResource( 4 )
 position = Vector2( 464, 328 )
 shape = SubResource( 1 )
 
+[node name="CameraArea" parent="." instance=ExtResource( 6 )]
+
+[node name="AreaShape" parent="CameraArea" index="0"]
+position = Vector2( 1584, 760 )
+
 [node name="Player" parent="." instance=ExtResource( 2 )]
 position = Vector2( 480, 448 )
 
@@ -82,6 +89,7 @@ position = Vector2( 480, 448 )
 visible = false
 position = Vector2( 512, 296 )
 current = true
-process_mode = 0
 smoothing_enabled = true
 smoothing_speed = 15.0
+
+[editable path="CameraArea"]

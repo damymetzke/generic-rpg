@@ -17,6 +17,11 @@ public class Player : KinematicBody2D, IDamageable
 	[Export]
 	private uint maxHealth = 100;
 
+	[Export]
+	private NodePath inGameUiPath;
+
+	private InGameUi inGameUi;
+
 	private uint health;
 
 	private Vector2 motion;
@@ -30,6 +35,12 @@ public class Player : KinematicBody2D, IDamageable
 		dynamicCameraSingleton = (DynamicCameraSingleton)GetNode("/root/DynamicCameraSingleton");
 
 		health = maxHealth;
+
+		Node possibleInGameUi = GetNode(inGameUiPath);
+		if (possibleInGameUi is InGameUi)
+		{
+			inGameUi = (InGameUi)possibleInGameUi;
+		}
 
 	}
 
@@ -111,11 +122,15 @@ public class Player : KinematicBody2D, IDamageable
 		if (health <= damage.amount)
 		{
 			health = 0;
-			GD.Print("The player has died");
-			return;
+		}
+		else
+		{
+			health -= damage.amount;
 		}
 
-		health -= damage.amount;
-		GD.Print($"The player has {health} health left");
+		if (inGameUi != null)
+		{
+			inGameUi.UpdateHealthBar((float)health / (float)maxHealth);
+		}
 	}
 }

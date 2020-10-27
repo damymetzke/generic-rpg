@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://resources/sprite-frames/test-enemy.tres" type="SpriteFrames" id=1]
+[ext_resource path="res://src/Enemy.cs" type="Script" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 15.9953, 10.6741 )
+
+[node name="Enemy" type="KinematicBody2D"]
+script = ExtResource( 2 )
+
+[node name="CharacterSprite" type="AnimatedSprite" parent="."]
+scale = Vector2( 4, 4 )
+frames = ExtResource( 1 )
+animation = "Idle"
+
+[node name="CollisionBox" type="CollisionShape2D" parent="."]
+position = Vector2( 0.103537, 21.9187 )
+shape = SubResource( 1 )

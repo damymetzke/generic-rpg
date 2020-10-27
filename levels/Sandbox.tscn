@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://resources/tilesets/test.tres" type="TileSet" id=1]
 [ext_resource path="res://Actors/Player.tscn" type="PackedScene" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://Actors/CameraArea.tscn" type="PackedScene" id=6]
 [ext_resource path="res://resources/textures/backgrounds/test-background.png" type="Texture" id=7]
 [ext_resource path="res://Actors/Enemy.tscn" type="PackedScene" id=8]
+[ext_resource path="res://ui/InGameUi.tscn" type="PackedScene" id=9]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 48, 24 )
@@ -30,6 +31,10 @@ position = Vector2( 0, -50 )
 scale = Vector2( 4, 4 )
 texture = ExtResource( 7 )
 centered = false
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="InGameUi" parent="CanvasLayer" instance=ExtResource( 9 )]
 
 [node name="Tiles" type="Node2D" parent="."]
 

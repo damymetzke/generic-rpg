@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public class Player : KinematicBody2D
+public class Player : KinematicBody2D, IDamageable
 {
 	DynamicCameraSingleton dynamicCameraSingleton;
 	private AnimatedSprite animatedSprite;
@@ -14,6 +14,11 @@ public class Player : KinematicBody2D
 	[Export]
 	private bool updateCameraPosition = true;
 
+	[Export]
+	private uint maxHealth = 100;
+
+	private uint health;
+
 	private Vector2 motion;
 
 	public override void _Ready()
@@ -23,6 +28,8 @@ public class Player : KinematicBody2D
 		animatedSprite.Play("idle");
 
 		dynamicCameraSingleton = (DynamicCameraSingleton)GetNode("/root/DynamicCameraSingleton");
+
+		health = maxHealth;
 
 	}
 
@@ -97,5 +104,18 @@ public class Player : KinematicBody2D
 		}
 
 		MoveAndSlide(motion);
+	}
+
+	public void ApplyDamage(Damage damage)
+	{
+		if (health <= damage.amount)
+		{
+			health = 0;
+			GD.Print("The player has died");
+			return;
+		}
+
+		health -= damage.amount;
+		GD.Print($"The player has {health} health left");
 	}
 }

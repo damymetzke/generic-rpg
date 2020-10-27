@@ -56,6 +56,7 @@ player_down={
 
 2d_physics/layer_1="LevelGeometry"
 2d_physics/layer_2="Player"
+2d_physics/layer_3="Enemy"
 
 [physics]
 

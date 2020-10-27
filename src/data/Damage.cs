@@ -1,6 +1,6 @@
 using Godot;
 
-struct Damage
+public struct Damage
 {
     public Damage(uint amount, Node from = null)
     {
@@ -8,6 +8,6 @@ struct Damage
         this.from = from;
     }
 
-    uint amount;
-    Node from;
+    public uint amount;
+    public Node from;
 }

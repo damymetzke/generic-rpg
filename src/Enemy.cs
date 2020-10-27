@@ -11,6 +11,19 @@ public class Enemy : KinematicBody2D
 
 		sprite = GetNode<AnimatedSprite>("CharacterSprite");
 		sprite.Play("idle");
-	}
 
+	}
+	private void OnBodyEntered(object body)
+	{
+		if (!(body is Player))
+		{
+			return;
+		}
+
+		Player player = (Player)body;
+
+		player.ApplyDamage(new Damage(10));
+	}
 }
+
+

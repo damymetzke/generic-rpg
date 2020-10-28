@@ -1,16 +1,27 @@
 using Godot;
 using System;
 
-public class HealthBar : TextureRect
+public class HealthBar : Control
 {
-	public void UpdateHealthBar(float progress)
-	{
-		if (!(Material is ShaderMaterial))
-		{
-			return;
-		}
+    private TextureRect functionalBar;
 
-		((ShaderMaterial)Material).SetShaderParam("progress", Mathf.Clamp(progress, 0.0f, 1.0f));
-	}
+    public override void _Ready()
+    {
+        base._Ready();
+
+        functionalBar = (TextureRect)GetNode("FunctionalBar");
+    }
+
+
+
+    public void UpdateHealthBar(float progress)
+    {
+        if (!(functionalBar.Material is ShaderMaterial))
+        {
+            return;
+        }
+
+        ((ShaderMaterial)functionalBar.Material).SetShaderParam("progress", Mathf.Clamp(progress, 0.0f, 1.0f));
+    }
 
 }

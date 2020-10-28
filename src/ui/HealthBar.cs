@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public class HealthBar : Control
+public class HealthBar : VBoxContainer
 {
     private TextureRect functionalBar;
 

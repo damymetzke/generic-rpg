@@ -5,24 +5,23 @@
 [ext_resource path="res://src/ui/HealthBar.cs" type="Script" id=3]
 [ext_resource path="res://resources/textures/ui/HealthBarWrapper.png" type="Texture" id=4]
 
-[node name="HealthBar" type="Control"]
-margin_right = 40.0
-margin_bottom = 40.0
+[node name="HealthBar" type="VBoxContainer"]
+margin_right = 288.0
+margin_bottom = 128.0
 script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Bar" type="Control" parent="."]
-margin_right = 40.0
-margin_bottom = 40.0
+[node name="Bar" type="MarginContainer" parent="."]
+margin_right = 288.0
+margin_bottom = 96.0
+rect_min_size = Vector2( 288, 96 )
 
 [node name="FunctionalBar" type="TextureRect" parent="Bar"]
 material = ExtResource( 1 )
-anchor_left = 0.4
-anchor_top = 0.4
-anchor_right = 6.8
-anchor_bottom = 2.0
+margin_right = 288.0
+margin_bottom = 96.0
 texture = ExtResource( 2 )
 expand = true
 __meta__ = {
@@ -37,3 +36,13 @@ expand = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="HBoxContainer" type="Label" parent="."]
+margin_left = 16.0
+margin_top = 100.0
+margin_right = 304.0
+margin_bottom = 132.0
+rect_min_size = Vector2( 272, 32 )
+text = "HP: 100/100"
+valign = 1
+clip_text = true

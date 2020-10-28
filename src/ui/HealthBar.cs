@@ -9,7 +9,7 @@ public class HealthBar : Control
     {
         base._Ready();
 
-        functionalBar = (TextureRect)GetNode("FunctionalBar");
+        functionalBar = (TextureRect)GetNode("Bar/FunctionalBar");
     }
 
 

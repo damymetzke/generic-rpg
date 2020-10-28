@@ -12,10 +12,10 @@ public class HealthBar : VBoxContainer
         functionalBar = (TextureRect)GetNode("Bar/FunctionalBar");
     }
 
-
-
-    public void UpdateHealthBar(float progress)
+    public void UpdateHealthBar(uint currentHealth, uint maxHealth)
     {
+        float progress = (float)currentHealth / (float)maxHealth;
+
         if (!(functionalBar.Material is ShaderMaterial))
         {
             return;

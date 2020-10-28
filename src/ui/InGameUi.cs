@@ -3,18 +3,18 @@ using System;
 
 public class InGameUi : Control
 {
-	HealthBar healthBar;
+    HealthBar healthBar;
 
-	public override void _Ready()
-	{
-		base._Ready();
+    public override void _Ready()
+    {
+        base._Ready();
 
-		healthBar = (HealthBar)GetNode("HealthBar");
-	}
+        healthBar = (HealthBar)GetNode("HealthBar");
+    }
 
-	// Wrapper function
-	public void UpdateHealthBar(float progress)
-	{
-		healthBar.UpdateHealthBar(progress);
-	}
+    // Wrapper function
+    public void UpdateHealthBar(uint currentHealth, uint maxHealth)
+    {
+        healthBar.UpdateHealthBar(currentHealth, maxHealth);
+    }
 }

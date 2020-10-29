@@ -1,0 +1,37 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://src/ui/AbilityCircle.cs" type="Script" id=1]
+[ext_resource path="res://resources/textures/ui/Ability.png" type="Texture" id=2]
+
+[node name="AbilityCircle" type="Control"]
+margin_right = 64.0
+margin_bottom = 96.0
+rect_min_size = Vector2( 64, 96 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="."]
+anchor_right = 1.0
+rect_min_size = Vector2( 64, 64 )
+rect_clip_content = true
+texture = ExtResource( 2 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="."]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -32.0
+margin_right = 1.12246
+margin_bottom = -1.60246
+rect_min_size = Vector2( 64, 32 )
+rect_clip_content = true
+text = "Ability"
+align = 1
+valign = 2
+clip_text = true

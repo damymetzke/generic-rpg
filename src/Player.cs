@@ -55,6 +55,9 @@ public class Player : KinematicBody2D, IDamageable
         {
             dynamicCameraSingleton.UpdateTarget(Position);
         }
+
+        TryAttack();
+
     }
 
     private Vector2 CalculateInputDirection()
@@ -115,6 +118,16 @@ public class Player : KinematicBody2D, IDamageable
         }
 
         MoveAndSlide(motion);
+    }
+
+    private void TryAttack()
+    {
+        if (!Input.IsActionJustPressed("player_primary_attack"))
+        {
+            return;
+        }
+
+        GD.Print("ATTACK");
     }
 
     public void ApplyDamage(Damage damage)

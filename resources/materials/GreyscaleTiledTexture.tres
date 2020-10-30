@@ -5,5 +5,5 @@
 [resource]
 shader = ExtResource( 1 )
 shader_param/numTiled = 9.0
-shader_param/colorModifier = Color( 1, 1, 1, 1 )
+shader_param/colorModifier = Color( 0, 0.631373, 0.894118, 1 )
 shader_param/currentTile = 0.0

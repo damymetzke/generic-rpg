@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://resources/sprite-frames/test-enemy.tres" type="SpriteFrames" id=1]
 [ext_resource path="res://src/Enemy.cs" type="Script" id=2]
+[ext_resource path="res://src/Hitbox.cs" type="Script" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 15.1619, 8.85217 )
@@ -24,6 +25,7 @@ position = Vector2( 0.103537, 21.9187 )
 shape = SubResource( 1 )
 
 [node name="Hitbox" type="Area2D" parent="."]
+script = ExtResource( 3 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 position = Vector2( -0.280609, 0 )

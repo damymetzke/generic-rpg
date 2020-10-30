@@ -1,10 +1,13 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://resources/sprite-frames/test-player.tres" type="SpriteFrames" id=1]
 [ext_resource path="res://src/Player.cs" type="Script" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 16.0023, 12.1056 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 12.1287, 23.6694 )
 
 [node name="Player" type="KinematicBody2D"]
 collision_layer = 2
@@ -18,3 +21,9 @@ animation = "idle"
 [node name="Hitbox" type="CollisionShape2D" parent="."]
 position = Vector2( 0.0130501, 19.858 )
 shape = SubResource( 1 )
+
+[node name="AttackArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
+position = Vector2( 40, 0.42 )
+shape = SubResource( 2 )

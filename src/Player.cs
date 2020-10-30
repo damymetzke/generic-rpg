@@ -5,6 +5,7 @@ public class Player : KinematicBody2D, IDamageable
 {
     DynamicCameraSingleton dynamicCameraSingleton;
     private AnimatedSprite animatedSprite;
+    private Area2D attackArea;
 
     [Export]
     private float acceleration = 4000.0f;
@@ -29,10 +30,13 @@ public class Player : KinematicBody2D, IDamageable
     public override void _Ready()
     {
         base._Ready();
-        animatedSprite = GetNode<AnimatedSprite>("CharacterSprite");
-        animatedSprite.Play("idle");
 
         dynamicCameraSingleton = (DynamicCameraSingleton)GetNode("/root/DynamicCameraSingleton");
+        animatedSprite = GetNode<AnimatedSprite>("CharacterSprite");
+        attackArea = GetNode<Area2D>("AttackArea");
+
+        animatedSprite.Play("idle");
+
 
         health = maxHealth;
 
@@ -127,7 +131,15 @@ public class Player : KinematicBody2D, IDamageable
             return;
         }
 
-        GD.Print("ATTACK");
+        foreach (Area2D area in attackArea.GetOverlappingAreas())
+        {
+            if (!(area is IDamageable))
+            {
+                continue;
+            }
+
+            ((IDamageable)area).ApplyDamage(new Damage(10));
+        }
     }
 
     public void ApplyDamage(Damage damage)

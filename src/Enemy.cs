@@ -1,29 +1,39 @@
 using Godot;
 using System;
 
-public class Enemy : KinematicBody2D
+public class Enemy : KinematicBody2D, IDamageable
 {
-	private AnimatedSprite sprite;
+    private AnimatedSprite sprite;
+    private Hitbox hitbox;
 
-	public override void _Ready()
-	{
-		base._Ready();
+    public override void _Ready()
+    {
+        base._Ready();
 
-		sprite = GetNode<AnimatedSprite>("CharacterSprite");
-		sprite.Play("idle");
+        sprite = GetNode<AnimatedSprite>("CharacterSprite");
+        hitbox = GetNode<Hitbox>("Hitbox");
 
-	}
-	private void OnBodyEntered(object body)
-	{
-		if (!(body is Player))
-		{
-			return;
-		}
+        sprite.Play("idle");
 
-		Player player = (Player)body;
+        hitbox.BindOnDamaged(ApplyDamage);
 
-		player.ApplyDamage(new Damage(10));
-	}
+    }
+    private void OnBodyEntered(object body)
+    {
+        if (!(body is Player))
+        {
+            return;
+        }
+
+        Player player = (Player)body;
+
+        player.ApplyDamage(new Damage(10));
+    }
+
+    public void ApplyDamage(Damage damage)
+    {
+        GD.Print("ouch");
+    }
 }
 
 

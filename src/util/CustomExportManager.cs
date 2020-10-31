@@ -1,5 +1,6 @@
 using Godot;
 using System.Collections.Generic;
+using System;
 
 public class CustomExportManager
 {
@@ -32,7 +33,12 @@ public class CustomExportManager
         currentGroup.RemoveAt(currentGroup.Count - 1);
     }
 
-    public void RegisterProperty(string name, Godot.Variant.Type type, GetPropertyFunction getFunction, SetPropertyFunction setFunction)
+    public void RegisterProperty(
+        string name,
+        Godot.Variant.Type type,
+        GetPropertyFunction getFunction,
+        SetPropertyFunction setFunction
+    )
     {
         // calculate name
         string propertyName = "";
@@ -55,6 +61,51 @@ public class CustomExportManager
         getPropertyFunctions.Add(propertyName, getFunction);
         setPropertyFunctions.Add(propertyName, setFunction);
 
+    }
+
+    public void RegisterPropertyEnum(
+        string name,
+        Godot.Variant.Type type,
+        GetPropertyFunction getFunction,
+        SetPropertyFunction setFunction,
+        Type enumType
+    )
+    {
+        // calculate name
+        string propertyName = "";
+
+        foreach (string group in currentGroup)
+        {
+            propertyName += $"{group}/";
+        }
+
+        propertyName += name;
+
+        string[] enumNames = Enum.GetNames(enumType);
+        string hintString = "";
+
+        if (enumNames.Length != 0)
+        {
+            hintString = enumNames[0].Replace("_", " ").ToLower();
+            for (int i = 1; i < enumNames.Length; ++i)
+            {
+                hintString += $",{enumNames[i].Replace("_", " ").ToLower()}";
+            }
+        }
+
+        // add property to property list
+        var newProperty = new Godot.Collections.Dictionary();
+        newProperty["name"] = propertyName;
+        newProperty["type"] = type;
+        newProperty["usage"] = Godot.PropertyUsageFlags.Default;
+        newProperty["hint"] = Godot.PropertyHint.Enum;
+        newProperty["hint_string"] = hintString;
+
+        propertyList.Add(newProperty);
+
+        // setup get and set logic
+        getPropertyFunctions.Add(propertyName, getFunction);
+        setPropertyFunctions.Add(propertyName, setFunction);
     }
 
     public Godot.Collections.Array GetPropertyList()

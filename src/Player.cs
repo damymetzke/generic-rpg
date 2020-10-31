@@ -4,6 +4,12 @@ using System;
 [Tool]
 public class Player : KinematicBody2D, IDamageable
 {
+    public enum EInputType
+    {
+        MOUSE_AND_KEYBOARD,
+        CONTROLLER
+    }
+
     // Singletons and child nodes //
     private DynamicCameraSingleton dynamicCameraSingleton;
     private AnimatedSprite animatedSprite;
@@ -16,6 +22,7 @@ public class Player : KinematicBody2D, IDamageable
     // Movement
     private float acceleration = 4000.0f;
     private float maxSpeed = 350.0f;
+    private EInputType inputType = EInputType.MOUSE_AND_KEYBOARD;
 
     // combat
     private uint maxHealth = 100;
@@ -35,6 +42,7 @@ public class Player : KinematicBody2D, IDamageable
         {
             customExportManager.RegisterProperty("Acceleration", Godot.Variant.Type.Real, () => acceleration, (object value) => { acceleration = (float)value; });
             customExportManager.RegisterProperty("MaxSpeed", Godot.Variant.Type.Real, () => maxSpeed, (object value) => { maxSpeed = (float)value; });
+            customExportManager.RegisterPropertyEnum("InputType", Godot.Variant.Type.Int, () => inputType, (object value) => { inputType = (EInputType)(int)value; }, (Type)typeof(EInputType));
         }
         customExportManager.PopGroup();
 
@@ -65,6 +73,7 @@ public class Player : KinematicBody2D, IDamageable
 
     public override Godot.Collections.Array _GetPropertyList()
     {
+        base._GetPropertyList();
         return customExportManager.GetPropertyList();
     }
 

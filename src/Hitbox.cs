@@ -18,7 +18,7 @@ public class Hitbox : Area2D, IDamageable
 
     public void ApplyDamage(Damage damage)
     {
-        EmitSignal("OnDamaged", damage.amount);
+        EmitSignal("OnDamagedSignal", damage.amount);
         nativeOnDamaged.Invoke(damage);
     }
 }

@@ -11,7 +11,7 @@ public class Player : KinematicBody2D, IDamageable
 
     // Exported variables //
     // Manager
-    CustomExportManager customExportManager;
+    protected CustomExportManager customExportManager;
 
     // Movement
     private float acceleration = 4000.0f;

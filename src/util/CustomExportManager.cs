@@ -1,7 +1,7 @@
 using Godot;
 using System.Collections.Generic;
 
-class CustomExportManager
+public class CustomExportManager
 {
     public delegate object GetPropertyFunction();
     public delegate void SetPropertyFunction(object value);

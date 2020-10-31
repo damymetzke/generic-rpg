@@ -6,6 +6,8 @@ public class Enemy : KinematicBody2D, IDamageable
     private AnimatedSprite sprite;
     private Hitbox hitbox;
 
+    private uint health = 25;
+
     public override void _Ready()
     {
         base._Ready();
@@ -32,7 +34,18 @@ public class Enemy : KinematicBody2D, IDamageable
 
     public void ApplyDamage(Damage damage)
     {
-        GD.Print("ouch");
+        if (health < damage.amount)
+        {
+            health = 0;
+            Die();
+        }
+
+        health -= damage.amount;
+    }
+
+    private void Die()
+    {
+        GetParent().RemoveChild(this);
     }
 }
 

@@ -1,28 +1,134 @@
 using Godot;
 using System;
 
+[Tool]
 public class Player : KinematicBody2D, IDamageable
 {
-    DynamicCameraSingleton dynamicCameraSingleton;
+    // Singletons and child nodes //
+    private DynamicCameraSingleton dynamicCameraSingleton;
     private AnimatedSprite animatedSprite;
     private Area2D attackArea;
 
-    [Export]
+    // Exported variables //
+    // Movement
     private float acceleration = 4000.0f;
-    [Export]
     private float maxSpeed = 350.0f;
 
-    [Export]
-    private bool updateCameraPosition = true;
-
-    [Export]
+    // combat
     private uint maxHealth = 100;
+    private float meleeCooldown = 1.0f;
 
-    [Export]
+    // etc
+    private bool updateCameraPosition = true;
     private NodePath inGameUiPath;
 
-    [Export]
-    private float meleeCooldown = 1.0f;
+
+    public override bool _Set(string property, object value)
+    {
+        switch (property)
+        {
+            case "Movement/Acceleration":
+                acceleration = (float)value;
+                break;
+            case "Movement/MaxSpeed":
+                maxSpeed = (float)value;
+                break;
+
+            case "Combat/MaxHealth":
+                maxHealth = (uint)(int)value;
+                break;
+            case "Combat/MeleeCooldown":
+                meleeCooldown = (float)value;
+                break;
+
+            case "Etc/UpdateCameraPosition":
+                updateCameraPosition = (bool)value;
+                break;
+            case "Etc/InGameUiPath":
+                inGameUiPath = (NodePath)value;
+                break;
+
+            default:
+                return base._Set(property, value);
+        }
+        return true;
+    }
+
+    public override object _Get(string property)
+    {
+        switch (property)
+        {
+            case "Movement/Acceleration":
+                return acceleration;
+            case "Movement/MaxSpeed":
+                return maxSpeed;
+
+            case "Combat/MaxHealth":
+                return maxHealth;
+            case "Combat/MeleeCooldown":
+                return meleeCooldown;
+
+            case "Etc/UpdateCameraPosition":
+                return updateCameraPosition;
+            case "Etc/InGameUiPath":
+                return inGameUiPath;
+
+            default:
+                return base._Get(property);
+
+        }
+    }
+
+    public override Godot.Collections.Array _GetPropertyList()
+    {
+        var result = new Godot.Collections.Array();
+
+        var PlayerCategory = new Godot.Collections.Dictionary();
+        PlayerCategory["name"] = "Player";
+        PlayerCategory["type"] = Godot.Variant.Type.Nil;
+        PlayerCategory["usage"] = Godot.PropertyUsageFlags.Category | Godot.PropertyUsageFlags.ScriptVariable;
+
+        var accelerationVariable = new Godot.Collections.Dictionary();
+        accelerationVariable["name"] = "Movement/Acceleration";
+        accelerationVariable["type"] = Godot.Variant.Type.Real;
+        accelerationVariable["usage"] = Godot.PropertyUsageFlags.Default;
+
+        var maxSpeedVariable = new Godot.Collections.Dictionary();
+        maxSpeedVariable["name"] = "Movement/MaxSpeed";
+        maxSpeedVariable["type"] = Godot.Variant.Type.Real;
+        maxSpeedVariable["usage"] = Godot.PropertyUsageFlags.Default;
+
+        var maxHealthVariable = new Godot.Collections.Dictionary();
+        maxHealthVariable["name"] = "Combat/MaxHealth";
+        maxHealthVariable["type"] = Godot.Variant.Type.Int; 
+        maxHealthVariable["usage"] = Godot.PropertyUsageFlags.Default;
+
+        var meleeCooldownVariable = new Godot.Collections.Dictionary();
+        meleeCooldownVariable["name"] = "Combat/MeleeCooldown";
+        meleeCooldownVariable["type"] = Godot.Variant.Type.Real;
+        meleeCooldownVariable["usage"] = Godot.PropertyUsageFlags.Default;
+
+        var updateCameraPositionVariable = new Godot.Collections.Dictionary();
+        updateCameraPositionVariable["name"] = "Etc/UpdateCameraPosition";
+        updateCameraPositionVariable["type"] = Godot.Variant.Type.Bool;
+        updateCameraPositionVariable["usage"] = Godot.PropertyUsageFlags.Default;
+
+        var inGameUiPathVariable = new Godot.Collections.Dictionary();
+        inGameUiPathVariable["name"] = "Etc/InGameUiPath";
+        inGameUiPathVariable["type"] = Godot.Variant.Type.NodePath;
+        inGameUiPathVariable["usage"] = Godot.PropertyUsageFlags.Default;
+
+        result.Add(PlayerCategory);
+        result.Add(accelerationVariable);
+        result.Add(maxSpeedVariable);
+        result.Add(maxHealthVariable);
+        result.Add(meleeCooldownVariable);
+        result.Add(updateCameraPositionVariable);
+        result.Add(inGameUiPathVariable);
+        return result;
+    }
+
+    // other variables //
 
     private float meleeCooldownProgress = 0.0f;
 
@@ -32,8 +138,14 @@ public class Player : KinematicBody2D, IDamageable
 
     private Vector2 motion;
 
+    // logic //
+
     public override void _Ready()
     {
+        if (Engine.EditorHint)
+        {
+            return;
+        }
         base._Ready();
 
         dynamicCameraSingleton = (DynamicCameraSingleton)GetNode("/root/DynamicCameraSingleton");
@@ -57,6 +169,10 @@ public class Player : KinematicBody2D, IDamageable
 
     public override void _PhysicsProcess(float delta)
     {
+        if (Engine.EditorHint)
+        {
+            return;
+        }
         RotateAttackArea();
 
         Vector2 direction = CalculateInputDirection();

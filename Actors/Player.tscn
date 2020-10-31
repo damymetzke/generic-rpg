@@ -18,7 +18,7 @@ Movement/Acceleration = 4000.0
 Movement/MaxSpeed = 350.0
 Movement/InputType = 0
 Combat/MaxHealth = 100
-Combat/MeleeCooldown = 1.0
+Combat/MeleeCooldown = 0.4
 Etc/UpdateCameraPosition = true
 Etc/InGameUiPath = NodePath("")
 

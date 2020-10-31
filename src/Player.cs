@@ -237,7 +237,7 @@ public class Player : KinematicBody2D, IDamageable
                 continue;
             }
 
-            ((IDamageable)area).ApplyDamage(new Damage(10));
+            ((IDamageable)area).ApplyDamage(new Damage(10, this));
         }
 
         meleeCooldownProgress = 0.0f;

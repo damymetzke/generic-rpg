@@ -14,6 +14,8 @@ public class Enemy : KinematicBody2D, IDamageable
     private float acceleration = 4000.0f;
     [Export]
     private float maxSpeed = 250.0f;
+    [Export]
+    private float knockbackAmount = 500.0f;
 
     Player followingPlayer = null;
 
@@ -133,6 +135,13 @@ public class Enemy : KinematicBody2D, IDamageable
         }
 
         health -= damage.amount;
+
+        if (damage.from != null && damage.from is Node2D)
+        {
+            Vector2 damageDirection = ((Node2D)damage.from).Position.DirectionTo(Position);
+
+            motion = damageDirection * knockbackAmount;
+        }
     }
 
     private void Die()

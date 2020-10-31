@@ -10,6 +10,9 @@ public class Player : KinematicBody2D, IDamageable
     private Area2D attackArea;
 
     // Exported variables //
+    // Manager
+    CustomExportManager customExportManager;
+
     // Movement
     private float acceleration = 4000.0f;
     private float maxSpeed = 350.0f;
@@ -22,110 +25,47 @@ public class Player : KinematicBody2D, IDamageable
     private bool updateCameraPosition = true;
     private NodePath inGameUiPath;
 
+    Player()
+    {
+        customExportManager = new CustomExportManager();
+
+        customExportManager.RegisterCategory("Player");
+
+        customExportManager.PushGroup("Movement");
+        {
+            customExportManager.RegisterProperty("Acceleration", Godot.Variant.Type.Real, () => acceleration, (object value) => { acceleration = (float)value; });
+            customExportManager.RegisterProperty("MaxSpeed", Godot.Variant.Type.Real, () => maxSpeed, (object value) => { maxSpeed = (float)value; });
+        }
+        customExportManager.PopGroup();
+
+        customExportManager.PushGroup("Combat");
+        {
+            customExportManager.RegisterProperty("MaxHealth", Godot.Variant.Type.Int, () => maxHealth, (object value) => { maxHealth = (uint)(int)value; });
+            customExportManager.RegisterProperty("MeleeCooldown", Godot.Variant.Type.Real, () => meleeCooldown, (object value) => { meleeCooldown = (float)value; });
+        }
+        customExportManager.PopGroup();
+
+        customExportManager.PushGroup("Etc");
+        {
+            customExportManager.RegisterProperty("UpdateCameraPosition", Godot.Variant.Type.Bool, () => updateCameraPosition, (object value) => { updateCameraPosition = (bool)value; });
+            customExportManager.RegisterProperty("InGameUiPath", Godot.Variant.Type.NodePath, () => inGameUiPath, (object value) => { inGameUiPath = (NodePath)value; });
+        }
+        customExportManager.PopGroup();
+    }
 
     public override bool _Set(string property, object value)
     {
-        switch (property)
-        {
-            case "Movement/Acceleration":
-                acceleration = (float)value;
-                break;
-            case "Movement/MaxSpeed":
-                maxSpeed = (float)value;
-                break;
-
-            case "Combat/MaxHealth":
-                maxHealth = (uint)(int)value;
-                break;
-            case "Combat/MeleeCooldown":
-                meleeCooldown = (float)value;
-                break;
-
-            case "Etc/UpdateCameraPosition":
-                updateCameraPosition = (bool)value;
-                break;
-            case "Etc/InGameUiPath":
-                inGameUiPath = (NodePath)value;
-                break;
-
-            default:
-                return base._Set(property, value);
-        }
-        return true;
+        return customExportManager.SetProperty(property, value);
     }
 
     public override object _Get(string property)
     {
-        switch (property)
-        {
-            case "Movement/Acceleration":
-                return acceleration;
-            case "Movement/MaxSpeed":
-                return maxSpeed;
-
-            case "Combat/MaxHealth":
-                return maxHealth;
-            case "Combat/MeleeCooldown":
-                return meleeCooldown;
-
-            case "Etc/UpdateCameraPosition":
-                return updateCameraPosition;
-            case "Etc/InGameUiPath":
-                return inGameUiPath;
-
-            default:
-                return base._Get(property);
-
-        }
+        return customExportManager.GetProperty(property);
     }
 
     public override Godot.Collections.Array _GetPropertyList()
     {
-        var result = new Godot.Collections.Array();
-
-        var PlayerCategory = new Godot.Collections.Dictionary();
-        PlayerCategory["name"] = "Player";
-        PlayerCategory["type"] = Godot.Variant.Type.Nil;
-        PlayerCategory["usage"] = Godot.PropertyUsageFlags.Category | Godot.PropertyUsageFlags.ScriptVariable;
-
-        var accelerationVariable = new Godot.Collections.Dictionary();
-        accelerationVariable["name"] = "Movement/Acceleration";
-        accelerationVariable["type"] = Godot.Variant.Type.Real;
-        accelerationVariable["usage"] = Godot.PropertyUsageFlags.Default;
-
-        var maxSpeedVariable = new Godot.Collections.Dictionary();
-        maxSpeedVariable["name"] = "Movement/MaxSpeed";
-        maxSpeedVariable["type"] = Godot.Variant.Type.Real;
-        maxSpeedVariable["usage"] = Godot.PropertyUsageFlags.Default;
-
-        var maxHealthVariable = new Godot.Collections.Dictionary();
-        maxHealthVariable["name"] = "Combat/MaxHealth";
-        maxHealthVariable["type"] = Godot.Variant.Type.Int; 
-        maxHealthVariable["usage"] = Godot.PropertyUsageFlags.Default;
-
-        var meleeCooldownVariable = new Godot.Collections.Dictionary();
-        meleeCooldownVariable["name"] = "Combat/MeleeCooldown";
-        meleeCooldownVariable["type"] = Godot.Variant.Type.Real;
-        meleeCooldownVariable["usage"] = Godot.PropertyUsageFlags.Default;
-
-        var updateCameraPositionVariable = new Godot.Collections.Dictionary();
-        updateCameraPositionVariable["name"] = "Etc/UpdateCameraPosition";
-        updateCameraPositionVariable["type"] = Godot.Variant.Type.Bool;
-        updateCameraPositionVariable["usage"] = Godot.PropertyUsageFlags.Default;
-
-        var inGameUiPathVariable = new Godot.Collections.Dictionary();
-        inGameUiPathVariable["name"] = "Etc/InGameUiPath";
-        inGameUiPathVariable["type"] = Godot.Variant.Type.NodePath;
-        inGameUiPathVariable["usage"] = Godot.PropertyUsageFlags.Default;
-
-        result.Add(PlayerCategory);
-        result.Add(accelerationVariable);
-        result.Add(maxSpeedVariable);
-        result.Add(maxHealthVariable);
-        result.Add(meleeCooldownVariable);
-        result.Add(updateCameraPositionVariable);
-        result.Add(inGameUiPathVariable);
-        return result;
+        return customExportManager.GetPropertyList();
     }
 
     // other variables //

@@ -6,9 +6,9 @@ class CustomExportManager
     public delegate object GetPropertyFunction();
     public delegate void SetPropertyFunction(object value);
 
-    private Godot.Collections.Array propertyList;
-    private Dictionary<string, GetPropertyFunction> getPropertyFunctions;
-    private Dictionary<string, SetPropertyFunction> setPropertyFunctions;
+    private Godot.Collections.Array propertyList = new Godot.Collections.Array();
+    private Dictionary<string, GetPropertyFunction> getPropertyFunctions = new Dictionary<string, GetPropertyFunction>();
+    private Dictionary<string, SetPropertyFunction> setPropertyFunctions = new Dictionary<string, SetPropertyFunction>();
 
     private List<string> currentGroup = new List<string>();
 
@@ -46,14 +46,14 @@ class CustomExportManager
 
         // add property to property list
         var newProperty = new Godot.Collections.Dictionary();
-        newProperty["name"] = name;
+        newProperty["name"] = propertyName;
         newProperty["type"] = type;
         newProperty["usage"] = Godot.PropertyUsageFlags.Default;
         propertyList.Add(newProperty);
 
         // setup get and set logic
-        getPropertyFunctions.Add(name, getFunction);
-        setPropertyFunctions.Add(name, setFunction);
+        getPropertyFunctions.Add(propertyName, getFunction);
+        setPropertyFunctions.Add(propertyName, setFunction);
 
     }
 

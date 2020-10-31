@@ -9,11 +9,14 @@ extents = Vector2( 16.0023, 12.1056 )
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 43.5447, 51.1802 )
 
-[node name="Player" type="KinematicBody2D"]
+[node name="Player" type="KinematicBody2D" groups=[
+"player",
+]]
 collision_layer = 2
 script = ExtResource( 2 )
 Movement/Acceleration = 4000.0
 Movement/MaxSpeed = 350.0
+Movement/InputType = 0
 Combat/MaxHealth = 100
 Combat/MeleeCooldown = 1.0
 Etc/UpdateCameraPosition = true

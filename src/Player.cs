@@ -57,6 +57,8 @@ public class Player : KinematicBody2D, IDamageable
 
     public override void _PhysicsProcess(float delta)
     {
+        RotateAttackArea();
+
         Vector2 direction = CalculateInputDirection();
         CalculateAnimation(direction);
 
@@ -71,6 +73,11 @@ public class Player : KinematicBody2D, IDamageable
 
         UpdateAttackIndicator();
 
+    }
+
+    private void RotateAttackArea()
+    {
+        attackArea.Rotation = GetAngleTo(GetGlobalMousePosition());
     }
 
     private Vector2 CalculateInputDirection()

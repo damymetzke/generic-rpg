@@ -7,7 +7,7 @@
 extents = Vector2( 16.0023, 12.1056 )
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 12.1287, 23.6694 )
+extents = Vector2( 43.5447, 51.1802 )
 
 [node name="Player" type="KinematicBody2D"]
 collision_layer = 2
@@ -26,5 +26,5 @@ shape = SubResource( 1 )
 [node name="AttackArea" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
-position = Vector2( 40, 0.42 )
+position = Vector2( 43.5355, -0.707108 )
 shape = SubResource( 2 )

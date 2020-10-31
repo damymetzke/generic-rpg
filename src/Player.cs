@@ -21,6 +21,11 @@ public class Player : KinematicBody2D, IDamageable
     [Export]
     private NodePath inGameUiPath;
 
+    [Export]
+    private float meleeCooldown = 1.0f;
+
+    private float meleeCooldownProgress = 0.0f;
+
     private InGameUi inGameUi;
 
     private uint health;
@@ -46,6 +51,8 @@ public class Player : KinematicBody2D, IDamageable
             inGameUi = (InGameUi)possibleInGameUi;
         }
 
+        meleeCooldownProgress = meleeCooldown;
+
     }
 
     public override void _PhysicsProcess(float delta)
@@ -60,7 +67,9 @@ public class Player : KinematicBody2D, IDamageable
             dynamicCameraSingleton.UpdateTarget(Position);
         }
 
-        TryAttack();
+        TryAttack(delta);
+
+        UpdateAttackIndicator();
 
     }
 
@@ -124,9 +133,11 @@ public class Player : KinematicBody2D, IDamageable
         MoveAndSlide(motion);
     }
 
-    private void TryAttack()
+    private void TryAttack(float delta)
     {
-        if (!Input.IsActionJustPressed("player_primary_attack"))
+        meleeCooldownProgress = Mathf.Clamp(meleeCooldownProgress + delta, 0.0f, meleeCooldown);
+
+        if (!Input.IsActionJustPressed("player_primary_attack") || meleeCooldownProgress < meleeCooldown)
         {
             return;
         }
@@ -140,6 +151,13 @@ public class Player : KinematicBody2D, IDamageable
 
             ((IDamageable)area).ApplyDamage(new Damage(10));
         }
+
+        meleeCooldownProgress = 0.0f;
+    }
+
+    private void UpdateAttackIndicator()
+    {
+        inGameUi.UpdateAbilityMelee(meleeCooldownProgress / meleeCooldown);
     }
 
     public void ApplyDamage(Damage damage)

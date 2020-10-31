@@ -12,6 +12,7 @@ extents = Vector2( 12.1287, 23.6694 )
 [node name="Player" type="KinematicBody2D"]
 collision_layer = 2
 script = ExtResource( 2 )
+meleeCooldown = 0.5
 
 [node name="CharacterSprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 4, 4 )

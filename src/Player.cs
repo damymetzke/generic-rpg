@@ -142,7 +142,23 @@ public class Player : KinematicBody2D, IDamageable
 
     private void RotateAttackArea()
     {
-        attackArea.Rotation = GetAngleTo(GetGlobalMousePosition());
+        switch (inputType)
+        {
+            case EInputType.MOUSE_AND_KEYBOARD:
+                attackArea.Rotation = GetAngleTo(GetGlobalMousePosition());
+                break;
+            case EInputType.CONTROLLER:
+                Vector2 lookDirection = new Vector2(
+                    Input.GetActionStrength("player_look_right") - Input.GetActionStrength("player_look_left"),
+                    Input.GetActionStrength("player_look_down") - Input.GetActionStrength("player_look_up")
+                ).Normalized();
+                if (lookDirection.Length() == 0.0f)
+                {
+                    break;
+                }
+                attackArea.Rotation = lookDirection.Angle();
+                break;
+        }
     }
 
     private Vector2 CalculateInputDirection()

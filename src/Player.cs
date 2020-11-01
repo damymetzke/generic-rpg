@@ -14,6 +14,7 @@ public class Player : KinematicBody2D, IDamageable
     private DynamicCameraSingleton dynamicCameraSingleton;
     private AnimatedSprite animatedSprite;
     private Area2D attackArea;
+    private AnimatedSprite swordSlashAnimation;
 
     // Exported variables //
     // Manager
@@ -100,6 +101,7 @@ public class Player : KinematicBody2D, IDamageable
         dynamicCameraSingleton = (DynamicCameraSingleton)GetNode("/root/DynamicCameraSingleton");
         animatedSprite = GetNode<AnimatedSprite>("CharacterSprite");
         attackArea = GetNode<Area2D>("AttackArea");
+        swordSlashAnimation = GetNode<AnimatedSprite>("AttackArea/SwordSlashAnimation");
 
         animatedSprite.Play("idle");
 
@@ -221,6 +223,14 @@ public class Player : KinematicBody2D, IDamageable
         MoveAndSlide(motion);
     }
 
+    // called when sword animation is finished
+    private void OnSwordslashAnimationFinished()
+    {
+        swordSlashAnimation.Stop();
+        swordSlashAnimation.Frame = 0;
+        swordSlashAnimation.Visible = false;
+    }
+
     private void TryAttack(float delta)
     {
         meleeCooldownProgress = Mathf.Clamp(meleeCooldownProgress + delta, 0.0f, meleeCooldown);
@@ -229,6 +239,9 @@ public class Player : KinematicBody2D, IDamageable
         {
             return;
         }
+
+        swordSlashAnimation.Play("default");
+        swordSlashAnimation.Visible = true;
 
         foreach (Area2D area in attackArea.GetOverlappingAreas())
         {

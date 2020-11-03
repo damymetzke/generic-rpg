@@ -1,0 +1,16 @@
+[gd_scene format=2]
+
+[node name="ToggleDevItem" type="Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_min_size = Vector2( 0, 32 )
+
+[node name="Label" type="Label" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+text = "TOGGLE: TRUE"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}

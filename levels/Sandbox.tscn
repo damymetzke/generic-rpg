@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://resources/tilesets/test.tres" type="TileSet" id=1]
 [ext_resource path="res://Actors/Player.tscn" type="PackedScene" id=2]
@@ -9,7 +9,6 @@
 [ext_resource path="res://resources/textures/backgrounds/test-background.png" type="Texture" id=7]
 [ext_resource path="res://Actors/Enemy.tscn" type="PackedScene" id=8]
 [ext_resource path="res://ui/InGameUi.tscn" type="PackedScene" id=9]
-
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 48, 24 )

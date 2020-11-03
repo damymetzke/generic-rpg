@@ -1,19 +1,28 @@
-[gd_scene format=2]
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://src/ui/InGameDebugConsole.cs" type="Script" id=1]
 
 [node name="DebugConsole" type="Panel"]
+self_modulate = Color( 1, 1, 1, 0.501961 )
 anchor_right = 1.0
 anchor_bottom = 1.0
-
-[node name="DisplayText" type="Label" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_bottom = -28.0
-autowrap = true
+script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="InputText" type="Label" parent="."]
+[node name="History" type="RichTextLabel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_bottom = -28.0
+bbcode_enabled = true
+scroll_active = false
+scroll_following = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Input" type="Label" parent="."]
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0

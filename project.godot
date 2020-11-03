@@ -23,6 +23,7 @@ config/icon="res://icon.png"
 
 DynamicLayerSingleton="*res://src/singleton/DynamicLayerSingleton.cs"
 DynamicCameraSingleton="*res://src/singleton/DynamicCameraSingleton.cs"
+DebugConsole="*res://src/singleton/DebugConsole.cs"
 
 [display]
 

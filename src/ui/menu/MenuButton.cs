@@ -5,10 +5,33 @@ public class MenuButton : Panel
 {
     private bool isHovered = false;
 
-    // Called when the node enters the scene tree for the first time.
-    public override void _Ready()
-    {
+    [Signal]
+    public delegate void OnButtonPressed();
+    private OnButtonPressed onButtonPressed = () => { };
 
+    public void registerButtonPress(OnButtonPressed function)
+    {
+        onButtonPressed += function;
+    }
+
+    public override void _Input(InputEvent @event)
+    {
+        base._Input(@event);
+
+        if (!(@event is InputEventMouseButton) || !isHovered)
+        {
+            return;
+        }
+
+        var mouseEvent = (InputEventMouseButton)@event;
+
+        if (mouseEvent.ButtonIndex != (int)Godot.ButtonList.Left || mouseEvent.Pressed == false)
+        {
+            return;
+        }
+
+        onButtonPressed.Invoke();
+        GD.Print("pressed!");
     }
 
     private void OnMouseEnter()

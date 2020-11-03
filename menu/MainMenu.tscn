@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://resources/textures/ui/main-menu/Logo.png" type="Texture" id=1]
+[ext_resource path="res://menu/elements/MenuButtonStart.tscn" type="PackedScene" id=2]
 
 [node name="MainMenu" type="Control"]
 anchor_right = 1.0
@@ -27,3 +28,18 @@ stretch_mode = 6
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Buttons" type="VBoxContainer" parent="Margin"]
+anchor_right = 1.0
+margin_top = 212.0
+margin_right = 0.400024
+margin_bottom = 319.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MenuButtonStart" parent="Margin/Buttons" instance=ExtResource( 2 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 922.0
+margin_bottom = 50.0

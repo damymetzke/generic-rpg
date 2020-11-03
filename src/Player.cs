@@ -12,6 +12,7 @@ public class Player : KinematicBody2D, IDamageable
 
     // Singletons and child nodes //
     private DynamicCameraSingleton dynamicCameraSingleton;
+    private DebugConsole consoleSingleton;
     private AnimatedSprite animatedSprite;
     private Area2D attackArea;
     private AnimatedSprite swordSlashAnimation;
@@ -88,6 +89,8 @@ public class Player : KinematicBody2D, IDamageable
 
     private Vector2 motion;
 
+    private bool godmode = false;
+
     // logic //
 
     public override void _Ready()
@@ -99,6 +102,7 @@ public class Player : KinematicBody2D, IDamageable
         base._Ready();
 
         dynamicCameraSingleton = (DynamicCameraSingleton)GetNode("/root/DynamicCameraSingleton");
+        consoleSingleton = GetNode<DebugConsole>("/root/DebugConsole");
         animatedSprite = GetNode<AnimatedSprite>("CharacterSprite");
         attackArea = GetNode<Area2D>("AttackArea");
         swordSlashAnimation = GetNode<AnimatedSprite>("AttackArea/SwordSlashAnimation");
@@ -116,6 +120,7 @@ public class Player : KinematicBody2D, IDamageable
 
         meleeCooldownProgress = meleeCooldown;
 
+        consoleSingleton.RegisterCommand("godmode", "Disable all player damage", OnGodmode);
     }
 
     public override void _PhysicsProcess(float delta)
@@ -263,6 +268,11 @@ public class Player : KinematicBody2D, IDamageable
 
     public void ApplyDamage(Damage damage)
     {
+        if (godmode)
+        {
+            return;
+        }
+
         if (health <= damage.amount)
         {
             health = 0;
@@ -275,6 +285,19 @@ public class Player : KinematicBody2D, IDamageable
         if (inGameUi != null)
         {
             inGameUi.UpdateHealthBar(health, maxHealth);
+        }
+    }
+
+    public void OnGodmode(DebugConsole console, string command, string[] arguments)
+    {
+        godmode = !godmode;
+        if (godmode)
+        {
+            console.Print($"[color=#29c90a]Enabled[/color] godmode");
+        }
+        else
+        {
+            console.Print($"[color=#e73518]Disabled[/color] godmode");
         }
     }
 }

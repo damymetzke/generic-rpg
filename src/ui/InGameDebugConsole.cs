@@ -27,7 +27,6 @@ public class InGameDebugConsole : Panel
 
     public void WriteCharacter(char character)
     {
-        GD.Print(character);
         currentInput += character;
         input.Text = currentInput;
     }

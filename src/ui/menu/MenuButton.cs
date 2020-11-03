@@ -31,7 +31,7 @@ public class MenuButton : Panel
         }
 
         onButtonPressed.Invoke();
-        GD.Print("pressed!");
+        EmitSignal("OnButtonPressed");
     }
 
     private void OnMouseEnter()

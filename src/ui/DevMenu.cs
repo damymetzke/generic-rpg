@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public class DevMenu : TextureRect
+public class DevMenu : Control
 {
     public override void _Input(InputEvent @event)
     {

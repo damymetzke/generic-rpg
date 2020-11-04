@@ -16,6 +16,10 @@ class GlobalState : Node
 
         public void Set(T value)
         {
+            if (under.Equals(value))
+            {
+                return;
+            }
             onChange.Invoke(under, value);
             under = value;
         }

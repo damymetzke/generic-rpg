@@ -61,6 +61,24 @@ position = Vector2( 481.162, 735.469 )
 position = Vector2( 474, 428 )
 Etc/InGameUiPath = NodePath("../../CanvasLayer/InGameUi")
 
+[node name="Enemy2" parent="Sortables" instance=ExtResource( 8 )]
+position = Vector2( 720, 706 )
+
+[node name="Enemy3" parent="Sortables" instance=ExtResource( 8 )]
+position = Vector2( 1298, 334 )
+
+[node name="Enemy4" parent="Sortables" instance=ExtResource( 8 )]
+position = Vector2( 1928, 86 )
+
+[node name="Enemy5" parent="Sortables" instance=ExtResource( 8 )]
+position = Vector2( 1964, 814 )
+
+[node name="Enemy6" parent="Sortables" instance=ExtResource( 8 )]
+position = Vector2( 1700, 780 )
+
+[node name="Enemy7" parent="Sortables" instance=ExtResource( 8 )]
+position = Vector2( 384, 1162 )
+
 [node name="Collision" type="Node2D" parent="."]
 visible = false
 

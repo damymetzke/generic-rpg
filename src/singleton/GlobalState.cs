@@ -2,6 +2,29 @@ using Godot;
 
 class GlobalState : Node
 {
+    public class Item<T>
+    {
+        public delegate void OnChange(T oldValue, T newValue);
+        private OnChange onChange = (T oldValue, T newValue) => { };
+
+        private T under;
+
+        public T Under
+        {
+            get { return under; }
+            set
+            {
+                onChange.Invoke(under, value);
+                under = value;
+            }
+        }
+
+        public void RegisterChange(OnChange callback)
+        {
+            onChange += callback;
+        }
+    }
+
     public enum EInputState
     {
         GAMEPLAY,
@@ -9,11 +32,6 @@ class GlobalState : Node
         MENU
     }
 
-    private EInputState inputState;
+    public Item<EInputState> inputState;
 
-    public EInputState GlobalInputState
-    {
-        get { return inputState; }
-        set { inputState = value; }
-    }
 }

@@ -9,14 +9,15 @@ class GlobalState : Node
 
         private T under;
 
-        public T Under
+        public T Get()
         {
-            get { return under; }
-            set
-            {
-                onChange.Invoke(under, value);
-                under = value;
-            }
+            return under;
+        }
+
+        public void Set(T value)
+        {
+            onChange.Invoke(under, value);
+            under = value;
         }
 
         public void RegisterChange(OnChange callback)
@@ -33,5 +34,4 @@ class GlobalState : Node
     }
 
     public Item<EInputState> inputState;
-
 }

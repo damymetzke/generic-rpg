@@ -16,6 +16,7 @@ public class Player : KinematicBody2D, IDamageable
     private AnimatedSprite animatedSprite;
     private Area2D attackArea;
     private AnimatedSprite swordSlashAnimation;
+    private GlobalState globalState;
 
     // Exported variables //
     // Manager
@@ -106,6 +107,8 @@ public class Player : KinematicBody2D, IDamageable
         animatedSprite = GetNode<AnimatedSprite>("CharacterSprite");
         attackArea = GetNode<Area2D>("AttackArea");
         swordSlashAnimation = GetNode<AnimatedSprite>("AttackArea/SwordSlashAnimation");
+        globalState = GetNode<GlobalState>("/root/GlobalState");
+
 
         animatedSprite.Play("idle");
 
@@ -170,6 +173,10 @@ public class Player : KinematicBody2D, IDamageable
 
     private Vector2 CalculateInputDirection()
     {
+        if (globalState.inputState.Get() != GlobalState.EInputState.GAMEPLAY)
+        {
+            return Vector2.Zero;
+        }
         return new Vector2(
                     Input.GetActionStrength("player_right") - Input.GetActionStrength("player_left"),
                     Input.GetActionStrength("player_down") - Input.GetActionStrength("player_up")

@@ -37,5 +37,5 @@ class GlobalState : Node
         MENU
     }
 
-    public Item<EInputState> inputState;
+    public Item<EInputState> inputState = new Item<EInputState>();
 }

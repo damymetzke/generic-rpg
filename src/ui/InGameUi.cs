@@ -6,6 +6,7 @@ public class InGameUi : Control
     HealthBar healthBar;
     AbilityCircle abilityMelee;
     private InGameDebugConsole debugConsole;
+    private GlobalState globalState;
 
     private bool debugActive = false;
 
@@ -16,16 +17,34 @@ public class InGameUi : Control
         healthBar = (HealthBar)GetNode("HealthBar");
         abilityMelee = (AbilityCircle)GetNode("AbilityMelee");
         debugConsole = GetNode<InGameDebugConsole>("DebugConsole");
+        globalState = GetNode<GlobalState>("/root/GlobalState");
     }
 
     public override void _Process(float delta)
     {
         base._Process(delta);
 
+        if (
+            globalState.inputState.Get() != GlobalState.EInputState.DEBUG_CONSOLE
+            && globalState.inputState.Get() != GlobalState.EInputState.GAMEPLAY
+            )
+        {
+            return;
+        }
+
         if (Input.IsActionJustPressed("toggle_dev_menu"))
         {
             debugActive = !debugActive;
             debugConsole.Visible = debugActive;
+
+            if (debugActive)
+            {
+                globalState.inputState.Set(GlobalState.EInputState.DEBUG_CONSOLE);
+            }
+            else
+            {
+                globalState.inputState.Set(GlobalState.EInputState.GAMEPLAY);
+            }
         }
     }
 
@@ -34,7 +53,7 @@ public class InGameUi : Control
         base._Input(@event);
 
         // only listen for keyoard input when debug console is open.
-        if (!(@event is InputEventKey) || !debugActive)
+        if (!(@event is InputEventKey) || globalState.inputState.Get() != GlobalState.EInputState.DEBUG_CONSOLE)
         {
             return;
         }
